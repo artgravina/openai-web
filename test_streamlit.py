@@ -6,7 +6,7 @@ from pinecone import Pinecone, ServerlessSpec
 
 from openai import OpenAI
 
-LOCAL_TEST = True
+LOCAL_TEST = False
 openai_api_key = None
 pinecone_api_key = None
 
@@ -21,8 +21,7 @@ else:
     pinecone_api_key = os.environ["PINECONE_API_KEY"]
     
 if openai_api_key == None or pinecone_api_key == None:
-    print("Failed to get a required API key")
-    quit()
+    st.error("Failed to get a required API key")
 
 
 model_name = 'text-embedding-ada-002'
