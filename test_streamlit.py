@@ -6,15 +6,31 @@ from pinecone import Pinecone, ServerlessSpec
 
 from openai import OpenAI
 
-load_dotenv()  # load .env support
+LOCAL_TEST = True
+openai_api_key = None
+pinecone_api_key = None
 
-openai.api_key = os.getenv("OPENAI_API_KEY") # private key neessary to access openai
+
+if LOCAL_TEST:
+    load_dotenv()  # load .env support
+    openai_api_key = os.getenv("OPENAI_API_KEY") # private key neessary to access openai
+    pinecone_api_key = os.getenv("PINECONE_API_KEY")
+else:
+    # access from GITHUB repository secret
+    openai_api_key = os.environ["OPENAI_API_KEY"]
+    pinecone_api_key = os.environ["PINECONE_API_KEY"]
+    
+if openai_api_key == None or pinecone_api_key == None:
+    print("Failed to get a required API key")
+    quit()
+
 
 model_name = 'text-embedding-ada-002'
 #model_name = 'text-embedding-3-small'
+openai.api_key = openai_api_key
 client = OpenAI()
 
-pinecone_api_key = os.getenv("PINECONE_API_KEY")
+
 pinecone = Pinecone(
     api_key=os.environ.get(pinecone_api_key)
 )
