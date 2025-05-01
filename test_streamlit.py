@@ -16,9 +16,9 @@ if LOCAL_TEST:
     openai_api_key = os.getenv("OPENAI_API_KEY") # private key neessary to access openai
     pinecone_api_key = os.getenv("PINECONE_API_KEY")
 else:
-    # access from GITHUB repository secret
-    openai_api_key = os.environ["OPENAI_API_KEY"]
-    pinecone_api_key = os.environ["PINECONE_API_KEY"]
+    # access from streamlit secret
+    openai_api_key = st.secrets["OPENAI_API_KEY"]
+    pinecone_api_key = st.secrets["PINECONE_API_KEY"]
     
 if openai_api_key == None or pinecone_api_key == None:
     st.error("Failed to get a required API key")
